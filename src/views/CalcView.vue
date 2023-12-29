@@ -1,5 +1,10 @@
 <script>
+import MyButton from '@/components/customButton/MyButton.vue';
+
 export default {
+    components: {
+        MyButton,
+    },
     data() {
         return {
             numA: 0,
@@ -10,8 +15,8 @@ export default {
     methods: {
         add() {
             if (!this.numA.toString().trim() === '' || !this.numB.toString().trim() === '') return;
-                this.result = this.numA + this.numB;
-            
+            this.result = this.numA + this.numB;
+
         },
         reduce() {
             this.result = this.numA - this.numB;
@@ -42,24 +47,32 @@ export default {
             </label>
         </div>
         <div class="btns">
-            <button class="btn" type="button" @click="add()">+</button>
-            <button class="btn" type="button" @click="reduce()">-</button>
-            <button class="btn" type="button" @click="mult()">*</button>
-            <button class="btn" type="button" @click="division()">/</button>
+            <!-- <button class="btn" type="button" @click="add()">+</button> -->
+            <MyButton @click="add()">+</MyButton>
+            <MyButton @click="reduce()">-</MyButton>
+            <MyButton @click="mult()">*</MyButton>
+            <MyButton @click="division()">/</MyButton>
         </div>
         <div>
             輸出結果:{{ result }}
         </div>
+        <div class="box"></div>
     </div>
 </template>
 
 <style lang="scss" scoped>
+label {
+    input {
+        @apply border-black border-[1px] m-2;
+    }
+}
+
 .btns {
     display: flex;
     gap: 30px;
+}
 
-    .btn {
-        padding: 10px 20px;
-    }
+.box {
+    @apply w-[300px] h-[300px] bg-[wheat] sm:h-[100px] sm:w-[100px] lg:w-[200px] lg:h-[200px];
 }
 </style>
