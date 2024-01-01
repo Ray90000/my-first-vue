@@ -26,6 +26,11 @@ const router = createRouter({
       name: 'calc',
       component: () => import('../views/CalcView.vue'),
     },
+    {
+      path: '/game',
+      name: 'game',
+      component: () => import('../views/GameView.vue'),
+    },
   ]
 })
 

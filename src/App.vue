@@ -21,8 +21,10 @@ export default {
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
     <RouterLink to="/calc">Calc</RouterLink>
+    <RouterLink to="/game">Game</RouterLink>
   </header>
   <main>
+    主頁樣式
     <!-- count : {{ count }}
     <div>
       <button type="button" @click="count++">++</button>
