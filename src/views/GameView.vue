@@ -2,8 +2,10 @@
 </script>
 
 <template>
-    <div>
-
+    <div class="game">
+        <div class="title">
+            <h1>point text</h1>
+        </div>
     </div>
 </template>
 

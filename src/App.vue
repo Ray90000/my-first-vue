@@ -24,14 +24,15 @@ export default {
     <RouterLink to="/game">Game</RouterLink>
   </header>
   <main>
-    主頁樣式
     <!-- count : {{ count }}
     <div>
       <button type="button" @click="count++">++</button>
     </div> -->
     <RouterView />
   </main>
-  <footer></footer>
+  <footer>
+    <p>by Ray</p>
+  </footer>
 </template>
 
 <style></style>

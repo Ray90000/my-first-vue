@@ -2,17 +2,39 @@
 
 #app {
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: 0px;
+  height: 100vh;
+  
+  /* padding: 2rem; */
   font-weight: normal;
+  header{
+    width: 100dvw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  main{
+    display: flex;
+    justify-content: center;
+  }
+  footer{
+    display: flex;
+    justify-content: end;
+    p{
+     padding: 20px;
+     justify-content: center;
+     align-items: center;
+    }
+  }
 }
-
 a,
 .green {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
   padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (hover: hover) {
@@ -29,7 +51,7 @@ a,
 
   #app {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    grid-template-rows: 0.1fr 1.5fr 0.1fr;
+    /* padding: 0 2rem; */
   }
 }
