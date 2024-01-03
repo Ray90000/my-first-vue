@@ -21,6 +21,7 @@ export default {
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
     <RouterLink to="/calc">Calc</RouterLink>
+    <RouterLink to="/todolist">TODOLIST</RouterLink>
     <RouterLink to="/game">Game</RouterLink>
   </header>
   <main>
