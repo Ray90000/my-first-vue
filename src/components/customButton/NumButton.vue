@@ -5,8 +5,8 @@ export default {
 </script>
 
 <template>
-    <section id="myBtn">
-        <button class="btn" type="button">
+    <section id="numBtn">
+        <button class="num" type="button">
             <slot />
         </button>
     </section>
@@ -14,8 +14,8 @@ export default {
 
 <style scoped lang="scss">
 #myBtn {
-    .btn {
-        @apply w-16 h-16 bg-orange-400 text-white rounded-full  hover:bg-orange-300;
+    .num {
+        @apply w-16 h-16 bg-orange-400 text-white rounded-full  hover:bg-[red];
     }
 }
 </style>

@@ -9,7 +9,8 @@ export default {
         return {
             numA: 0,
             numB: 0,
-            result: null
+            result: null,
+            calcType : ["+","-","*","/"],
         }
     },
     methods: {
@@ -37,7 +38,7 @@ export default {
         <div class="result">
             輸出結果:{{ result }}
         </div>
-        <!-- <div>
+        <div>
             <label>
                 數字A:
                 <input type="number" v-model="numA">
@@ -48,14 +49,14 @@ export default {
                 數字B:
                 <input type="number" v-model="numB">
             </label>
-        </div> -->
+        </div>
         <div class="calc-btns">
             <MyButton @click="add()">+</MyButton>
             <MyButton @click="reduce()">-</MyButton>
             <MyButton @click="mult()">*</MyButton>
             <MyButton @click="division()">/</MyButton>
         </div>
-        <div class="number-btns">
+        <!-- <div class="number-btns">
             <div class="number-btn">1</div>
             <div class="number-btn">2</div>
             <div class="number-btn">3</div>
@@ -66,23 +67,29 @@ export default {
             <div class="number-btn">8</div>
             <div class="number-btn">9</div>
         </div>
+        <div class="result-btn">
+            =
+        </div> -->
         <!-- <div class="box"></div> -->
     </div>
 </template>
 
 <style lang="scss" scoped>
-
-.calc{
+.calc {
     width: 300px;
+    // background-color: black;
 }
-.calc > div{
+
+.calc>div {
     margin-top: 20px;
 }
-.calc-t{
+
+.calc-t {
     font-size: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: aliceblue;
 }
 
 // label {
@@ -96,21 +103,16 @@ export default {
     justify-content: space-around;
 }
 
-.number-btns{
-    display: flex;
-    flex-wrap: wrap;
-    .number-btn{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 90px;
-        height: 90px;
-        border: 1px solid black;
-        border-radius: 50%;
-        margin: 5px;
-        @apply bg-slate-400 ;
-    }
-}
+// .number-btns {
+//     @apply flex flex-wrap;
+//     .number-btn {
+//         @apply flex justify-center items-center w-[90px] h-[90px]  border-solid rounded-full m-[5px] text-white bg-gray-700 hover:bg-gray-500;
+//     }
+// }
+
+// .result-btn{
+//     @apply flex justify-center items-center w-[100%] h-[60px] bg-[#fb923c] text-white
+// }
 
 // .box {
 //     @apply w-[300px] h-[300px] bg-[wheat] sm:h-[100px] sm:w-[100px] lg:w-[200px] lg:h-[200px];
