@@ -5,12 +5,13 @@ export default {
             addText: '',
             addDateStart: '',
             addDateEnd: '',
+            formattedDate: '',
             toDoListArr: [
                 {
                     id: 1,
                     toDo: '不要下雨',
-                    dateStart: '2024/01/03',
-                    dateEnd: '2024/01/04',
+                    dateStart: '2024-01-03',
+                    dateEnd: '2024-01-04',
                     checkThis: false,
                 },
             ],
@@ -18,18 +19,28 @@ export default {
     },
     //當網頁載入時會觸發
     mounted() {
+        //date
+        let currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth() + 1;
+        const day = currentDate.getDate();
+        this.formattedDate = `${year}-${month}-${day}`;
+
         if (sessionStorage.getItem("todolist")) {
             this.toDoListArr = JSON.parse(sessionStorage.getItem("todolist"));
         }
     },
     methods: {
         addList() {
+            console.log(this.formattedDate);
             // const{addText,} = this;
             if (this.addText.toString().trim() === '') return;
             const listId = this.toDoListArr.length ? Math.max(...this.toDoListArr.map(item => item.id)) + 1 : 1;
             this.toDoListArr.push({
                 id: listId,
                 toDo: this.addText,
+                dateStart: this.formattedDate,
+                dateEnd: this.addDateEnd,
                 checkThis: false,
             })
             this.addText = '';
@@ -37,6 +48,14 @@ export default {
             sessionStorage.setItem("todolist", JSON.stringify(this.toDoListArr));
 
         },
+        deleteList(id) {
+            const { toDoListArr } = this;
+            const deleteList = toDoListArr.filter(item => item.id !== id);
+            //如果要修改data直的話,還是要加上this
+            this.toDoListArr = deleteList;
+            sessionStorage.setItem("todolist", JSON.stringify(deleteList));
+            console.log(deleteList);
+        }
     }
 }
 </script>
@@ -54,7 +73,7 @@ export default {
 
         </div>
         <div>
-            Start: <input v-model="addDateStart" type="date" class=" border-orange-500 border-[4px]">
+            <!-- Start: <input v-model="addDateStart" type="date" class=" border-orange-500 border-[4px]"> -->
             End: <input v-model="addDateEnd" type="date" class=" border-orange-500 border-[4px]">
         </div>
         <div class="td-lists">
@@ -63,9 +82,9 @@ export default {
                 <input v-model="item.checkThis" type="checkbox" @click="console.log(item.checkThis)">
                 <span>{{ item.toDo }}</span>
                 <span>{{ item.dateStart }}-{{ item.dateEnd }}</span>
-                
-                
-                <button><font-awesome-icon :icon="['fas', 'trash']" /></button>
+
+
+                <button @click="deleteList(item.id)"><font-awesome-icon :icon="['fas', 'trash']" /></button>
             </div>
         </div>
         <div class="td-apply">
@@ -107,7 +126,7 @@ export default {
         @apply border w-[75%] h-[700px] overflow-y-scroll;
 
         .td-list {
-            @apply p-2 border flex justify-center items-center gap-4 bg-[#84A9C0];
+            @apply p-2 border-[2px]  flex justify-center items-center gap-4 ;
 
             button {
                 @apply ml-auto p-3;
