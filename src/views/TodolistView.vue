@@ -1,6 +1,43 @@
 <script>
 export default {
+    data() {
+        return {
+            addText: '',
+            addDateStart: '',
+            addDateEnd: '',
+            toDoListArr: [
+                {
+                    id: 1,
+                    toDo: '不要下雨',
+                    dateStart: '2024/01/03',
+                    dateEnd: '2024/01/04',
+                    checkThis: false,
+                },
+            ],
+        }
+    },
+    //當網頁載入時會觸發
+    mounted() {
+        if (sessionStorage.getItem("todolist")) {
+            this.toDoListArr = JSON.parse(sessionStorage.getItem("todolist"));
+        }
+    },
+    methods: {
+        addList() {
+            // const{addText,} = this;
+            if (this.addText.toString().trim() === '') return;
+            const listId = this.toDoListArr.length ? Math.max(...this.toDoListArr.map(item => item.id)) + 1 : 1;
+            this.toDoListArr.push({
+                id: listId,
+                toDo: this.addText,
+                checkThis: false,
+            })
+            this.addText = '';
+            //江心的衣料存入session，將資料轉成json格式儲存至session內
+            sessionStorage.setItem("todolist", JSON.stringify(this.toDoListArr));
 
+        },
+    }
 }
 </script>
 
@@ -10,19 +47,26 @@ export default {
             <font-awesome-icon :icon="['fas', 'table-list']" />
         </div>
         <div class="td-create">
-            <label for="">
-                <input type="text">
-
-            </label>
-            <button>
+            <input type="text" v-model="addText">
+            <button @click="addList()">
                 <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
+
         </div>
-        <div class="td-list">
-            <label for="">
-                <input type="checkbox">
-                read the book
-            </label>
+        <div>
+            Start: <input v-model="addDateStart" type="date" class=" border-orange-500 border-[4px]">
+            End: <input v-model="addDateEnd" type="date" class=" border-orange-500 border-[4px]">
+        </div>
+        <div class="td-lists">
+            <div class="td-list" v-for="item in toDoListArr" :key="item.id"
+                :class="{ 'bg-green-500': item.checkThis === true }">
+                <input v-model="item.checkThis" type="checkbox" @click="console.log(item.checkThis)">
+                <span>{{ item.toDo }}</span>
+                <span>{{ item.dateStart }}-{{ item.dateEnd }}</span>
+                
+                
+                <button><font-awesome-icon :icon="['fas', 'trash']" /></button>
+            </div>
         </div>
         <div class="td-apply">
             <div class="tasks">
@@ -51,13 +95,29 @@ export default {
             @apply border-orange-500 border-4 h-[50px] w-[400px];
         }
 
+
+
+
         button {
-            @apply bg-gray-500 w-[50px] h-[50px] ml-1;
+            @apply bg-gray-500 w-[50px] h-[50px] ml-1 text-white;
         }
     }
 
-    .td-list {
-        @apply border w-[75%];
+    .td-lists {
+        @apply border w-[75%] h-[700px] overflow-y-scroll;
+
+        .td-list {
+            @apply p-2 border flex justify-center items-center gap-4 bg-[#84A9C0];
+
+            button {
+                @apply ml-auto p-3;
+            }
+
+            /* .done {
+                text-decoration: line-through;
+            } */
+        }
+
     }
 
     .td-apply {
@@ -72,4 +132,5 @@ export default {
         }
     }
 
-}</style>
+}
+</style>
