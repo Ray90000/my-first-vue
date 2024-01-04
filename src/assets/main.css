@@ -10,7 +10,7 @@
   header{
     width: 100dvw;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   }
   main{
     display: flex;

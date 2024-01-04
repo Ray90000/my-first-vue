@@ -3,9 +3,9 @@ export default {
     data() {
         return {
             addText: '',
-            addDateStart: '',
             addDateEnd: '',
             formattedDate: '',
+            checkCount: 0,
             toDoListArr: [
                 {
                     id: 1,
@@ -55,7 +55,14 @@ export default {
             this.toDoListArr = deleteList;
             sessionStorage.setItem("todolist", JSON.stringify(deleteList));
             console.log(deleteList);
-        }
+        },
+        checkboxChange() {
+
+            const checkboxCount = this.toDoListArr.filter(item => item.checkThis == true).length + 1;
+            this.checkCount = checkboxCount;
+            console.log(checkboxCount);
+
+        },
     }
 }
 </script>
@@ -79,23 +86,24 @@ export default {
         <div class="td-lists">
             <div class="td-list" v-for="item in toDoListArr" :key="item.id"
                 :class="{ 'bg-green-500': item.checkThis === true }">
-                <input v-model="item.checkThis" type="checkbox" @click="console.log(item.checkThis)">
+                <input v-model="item.checkThis" type="checkbox" @click="checkboxChange()">
                 <span>{{ item.toDo }}</span>
                 <span>{{ item.dateStart }}-{{ item.dateEnd }}</span>
-
-
-                <button @click="deleteList(item.id)"><font-awesome-icon :icon="['fas', 'trash']" /></button>
+                <button @click="deleteList(item.id)" :class="{ 'hidden': item.checkThis === true }"><font-awesome-icon
+                        :icon="['fas', 'trash']" /></button>
             </div>
         </div>
         <div class="td-apply">
-            <div class="tasks">
-                <div class="task-25">1</div>
-                <div class="task-50">2</div>
-                <div class="task-75">3</div>
-                <div class="task-100">4</div>
+            <div class="tasks-range flex justify-evenly  border-[1px] border-black w-[240px]">
+                <div :class="{ 'bg-orange-500': checkCount >= item.id }" v-for="item in toDoListArr" :key="item.id"
+                    class="range w-full h-full">
+                    <div class="present h-full">{{ item.id }}</div>
+                </div>
+                <!-- <div class="range  bg-orange-500 w-full  h-full text-center">2</div>
+                <div class="range  bg-orange-500 w-full  h-full text-center">3</div> -->
             </div>
             <div class="td-remove">
-                <button>Remove</button>
+                <button class="border-4 border-black">Remove</button>
             </div>
         </div>
     </div>
@@ -126,7 +134,7 @@ export default {
         @apply border w-[75%] h-[700px] overflow-y-scroll;
 
         .td-list {
-            @apply p-2 border-[2px]  flex justify-center items-center gap-4 ;
+            @apply p-2 border-[2px] flex justify-center items-center gap-4;
 
             button {
                 @apply ml-auto p-3;
