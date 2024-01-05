@@ -56,13 +56,12 @@ export default {
             sessionStorage.setItem("todolist", JSON.stringify(deleteList));
             console.log(deleteList);
         },
-        checkboxChange() {
-            if (this.checkThis !== true) {
-                const checkboxCount = this.toDoListArr.filter(item => item.checkThis == true).length + 1;
-                this.checkCount = checkboxCount;
-                console.log(checkboxCount);
+        checkboxChange(item) {
+            if (!item.checkThis) {
+                this.checkCount = this.toDoListArr.filter(item => item.checkThis == true).length + 1;
+            } else {
+                this.checkCount = this.toDoListArr.filter(item => item.checkThis == true).length - 1;
             }
-
         },
     }
 }
@@ -87,21 +86,23 @@ export default {
         <div class="td-lists">
             <div class="td-list" v-for="item in toDoListArr" :key="item.id"
                 :class="{ 'bg-green-500': item.checkThis === true }">
-                <input v-model="item.checkThis" type="checkbox" @click="checkboxChange()">
+                <input v-model="item.checkThis" type="checkbox" @click="checkboxChange(item)">
                 <span>{{ item.toDo }}</span>
                 <span>{{ item.dateStart }}-{{ item.dateEnd }}</span>
-                <button @click="deleteList(item.id)" :class="{ 'hidden': item.checkThis === true }"><font-awesome-icon
-                        :icon="['fas', 'trash']" /></button>
+                <div>
+                    <button @click="edit(item.id)" :class="{ 'hidden': item.checkThis === true }"><font-awesome-icon :icon="['fas', 'pen-to-square']" /></button>
+                    <button @click="deleteList(item.id)" :class="{ 'hidden': item.checkThis === true }"><font-awesome-icon
+                            :icon="['fas', 'trash']" /></button>
+                </div>
+
             </div>
         </div>
         <div class="td-apply">
             <div class="tasks-range flex justify-evenly  border-[1px] border-black w-[240px]">
                 <div :class="{ 'bg-orange-500': checkCount >= item.id }" v-for="item in toDoListArr" :key="item.id"
                     class="range w-full h-full">
-                    <div class="present h-full">{{ item.id }}</div>
+                    <div class="present h-full"></div>
                 </div>
-                <!-- <div class="range  bg-orange-500 w-full  h-full text-center">2</div>
-                <div class="range  bg-orange-500 w-full  h-full text-center">3</div> -->
             </div>
             <div class="td-remove">
                 <button class="border-4 border-black">Remove</button>
@@ -133,17 +134,11 @@ export default {
 
     .td-lists {
         @apply border w-[75%] h-[700px] overflow-y-scroll;
-
         .td-list {
-            @apply p-2 border-[2px] flex justify-center items-center gap-4;
-
+            @apply p-2 border-[2px] flex justify-between items-center gap-4;
             button {
-                @apply ml-auto p-3;
+                @apply p-3;
             }
-
-            /* .done {
-                text-decoration: line-through;
-            } */
         }
 
     }
