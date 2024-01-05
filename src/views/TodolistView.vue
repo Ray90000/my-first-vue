@@ -57,10 +57,11 @@ export default {
             console.log(deleteList);
         },
         checkboxChange() {
-
-            const checkboxCount = this.toDoListArr.filter(item => item.checkThis == true).length + 1;
-            this.checkCount = checkboxCount;
-            console.log(checkboxCount);
+            if (this.checkThis !== true) {
+                const checkboxCount = this.toDoListArr.filter(item => item.checkThis == true).length + 1;
+                this.checkCount = checkboxCount;
+                console.log(checkboxCount);
+            }
 
         },
     }
