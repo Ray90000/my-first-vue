@@ -1,57 +1,48 @@
+<template>
+    <div>
+        <ul>
+            <li v-for="item in items" :key="item.id">
+                <span v-if="item.editing">
+                    <!-- 編輯模式 -->
+                    <input v-model="item.text" />
+                    <button @click="saveEdit(item)">保存</button>
+                    <button @click="cancelEdit(item)">取消</button>
+                </span>
+                <span v-else>
+                    <!-- 顯示模式 -->
+                    {{ item.text }}
+                    <button @click="startEdit(item)">編輯</button>
+                </span>
+            </li>
+        </ul>
+    </div>
+</template>
+  
 <script>
-let id = 0
-
 export default {
     data() {
         return {
-            newTodo: '',
-            hideCompleted: false,
-            todos: [
-                { id: id++, text: 'Learn HTML', done: true },
-                { id: id++, text: 'Learn JavaScript', done: true },
-                { id: id++, text: 'Learn Vue', done: false }
+            items: [
+                { id: 1, text: 'Item 1', editing: false },
+                { id: 2, text: 'Item 2', editing: false },
+                // ...其他項目
             ]
-        }
-    },
-    computed: {
-        // ...
-        filteredTodos(){
-            return this.hideCompleted
-            ? this.todos.filter((t) => (!t.done))
-            : this.todos;
-        },
+        };
     },
     methods: {
-        addTodo() {
-            this.todos.push({ id: id++, text: this.newTodo, done: false })
-            this.newTodo = ''
+        startEdit(item) {
+            // 啟用編輯模式
+            item.editing = true;
         },
-        removeTodo(todo) {
-            this.todos = this.todos.filter((t) => t !== todo)
+        saveEdit(item) {
+            // 保存修改
+            item.editing = false;
+        },
+        cancelEdit(item) {
+            // 取消編輯
+            item.editing = false;
         }
     }
-}
+};
 </script>
-
-<template>
-    <form @submit.prevent="addTodo">
-        <input v-model="newTodo">
-        <button>Add Todo</button>
-    </form>
-    <ul>
-        <li v-for="todo in filteredTodos" :key="todo.id">
-            <input type="checkbox" v-model="todo.done">
-            <span :class="{ done: todo.done }">{{ todo.text }}</span>
-            <button @click="removeTodo(todo)">X</button>
-        </li>
-    </ul>
-    <button @click="hideCompleted = !hideCompleted">
-        {{ hideCompleted ? 'Show all' : 'Hide completed' }}
-    </button>
-</template>
-
-<style>
-.done {
-    text-decoration: line-through;
-}
-</style>
+  

@@ -13,6 +13,7 @@ export default {
                     dateStart: '2024-01-03',
                     dateEnd: '2024-01-04',
                     checkThis: false,
+                    editing: false,
                 },
             ],
         }
@@ -25,10 +26,12 @@ export default {
         const month = currentDate.getMonth() + 1;
         const day = currentDate.getDate();
         this.formattedDate = `${year}-${month}-${day}`;
-
+        //畫面資料
         if (sessionStorage.getItem("todolist")) {
             this.toDoListArr = JSON.parse(sessionStorage.getItem("todolist"));
         }
+        //進度條顯示
+        
     },
     methods: {
         addList() {
@@ -42,11 +45,24 @@ export default {
                 dateStart: this.formattedDate,
                 dateEnd: this.addDateEnd,
                 checkThis: false,
+                editing: false,
             })
             this.addText = '';
             //江心的衣料存入session，將資料轉成json格式儲存至session內
             sessionStorage.setItem("todolist", JSON.stringify(this.toDoListArr));
 
+        },
+        startEdit(item) {
+            console.log(item.editing);
+            item.editing = !item.editing;
+
+        },
+        saveEdit(item) {
+            item.editing = false;
+            sessionStorage.setItem("todolist", JSON.stringify(this.toDoListArr));
+        },
+        cancelEdit(item) {
+            item.editing = false;
         },
         deleteList(id) {
             const { toDoListArr } = this;
@@ -81,16 +97,18 @@ export default {
         </div>
         <div>
             <!-- Start: <input v-model="addDateStart" type="date" class=" border-orange-500 border-[4px]"> -->
-            End: <input v-model="addDateEnd" type="date" class=" border-orange-500 border-[4px]">
+            Date: <input v-model="addDateEnd" type="date" class=" border-orange-500 border-[4px]">
         </div>
         <div class="td-lists">
             <div class="td-list" v-for="item in toDoListArr" :key="item.id"
                 :class="{ 'bg-green-500': item.checkThis === true }">
                 <input v-model="item.checkThis" type="checkbox" @click="checkboxChange(item)">
-                <span>{{ item.toDo }}</span>
+                <span v-if="!item.editing">{{ item.toDo }}</span>
+                <input v-else-if="item.editing" v-model="item.toDo" @keyup.enter="saveEdit(item)" @keyup.esc="cancelEdit(item)" type="text">
                 <span>{{ item.dateStart }}-{{ item.dateEnd }}</span>
                 <div>
-                    <button @click="edit(item.id)" :class="{ 'hidden': item.checkThis === true }"><font-awesome-icon :icon="['fas', 'pen-to-square']" /></button>
+                    <button @click="startEdit(item)" :class="{ 'hidden': item.checkThis === true }"><font-awesome-icon
+                            :icon="['fas', 'pen-to-square']" /></button>
                     <button @click="deleteList(item.id)" :class="{ 'hidden': item.checkThis === true }"><font-awesome-icon
                             :icon="['fas', 'trash']" /></button>
                 </div>
@@ -134,8 +152,10 @@ export default {
 
     .td-lists {
         @apply border w-[75%] h-[700px] overflow-y-scroll;
+
         .td-list {
             @apply p-2 border-[2px] flex justify-between items-center gap-4;
+
             button {
                 @apply p-3;
             }
