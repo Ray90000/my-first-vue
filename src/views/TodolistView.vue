@@ -31,7 +31,7 @@ export default {
             this.toDoListArr = JSON.parse(sessionStorage.getItem("todolist"));
         }
         //進度條顯示
-        
+
     },
     methods: {
         addList() {
@@ -73,6 +73,7 @@ export default {
             console.log(deleteList);
         },
         checkboxChange(item) {
+            item.editing = false;
             if (!item.checkThis) {
                 this.checkCount = this.toDoListArr.filter(item => item.checkThis == true).length + 1;
             } else {
@@ -104,7 +105,8 @@ export default {
                 :class="{ 'bg-green-500': item.checkThis === true }">
                 <input v-model="item.checkThis" type="checkbox" @click="checkboxChange(item)">
                 <span v-if="!item.editing">{{ item.toDo }}</span>
-                <input v-else-if="item.editing" v-model="item.toDo" @keyup.enter="saveEdit(item)" @keyup.esc="cancelEdit(item)" type="text">
+                <input class="w-[20%]" v-else-if="item.editing" v-model="item.toDo" @keyup.enter="saveEdit(item)"
+                    @keyup.esc="cancelEdit(item)" type="text">
                 <span>{{ item.dateStart }}-{{ item.dateEnd }}</span>
                 <div>
                     <button @click="startEdit(item)" :class="{ 'hidden': item.checkThis === true }"><font-awesome-icon
@@ -112,7 +114,6 @@ export default {
                     <button @click="deleteList(item.id)" :class="{ 'hidden': item.checkThis === true }"><font-awesome-icon
                             :icon="['fas', 'trash']" /></button>
                 </div>
-
             </div>
         </div>
         <div class="td-apply">
