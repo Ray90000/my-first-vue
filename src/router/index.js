@@ -37,9 +37,9 @@ const router = createRouter({
       component: () => import('../views/PicUpload.vue'),
     },
     {
-      path: '/game',
-      name: 'game',
-      component: () => import('../views/GameView.vue'),
+      path: '/weather',
+      name: 'weather',
+      component: () => import('../views/WeatherView.vue'),
     },
   ]
 })

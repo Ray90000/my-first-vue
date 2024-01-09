@@ -4,19 +4,22 @@
   max-width: 1280px;
   margin: 0px;
   height: 100vh;
-  
+
   /* padding: 2rem; */
   font-weight: normal;
-  header{
+
+  header {
     width: 100dvw;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   }
-  main{
+
+  main {
     display: flex;
     justify-content: center;
   }
-  footer{
+
+  /* footer{
     display: flex;
     justify-content: end;
     p{
@@ -24,8 +27,9 @@
      justify-content: center;
      align-items: center;
     }
-  }
+  } */
 }
+
 a,
 .green {
   text-decoration: none;
