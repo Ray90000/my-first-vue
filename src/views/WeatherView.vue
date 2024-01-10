@@ -83,6 +83,7 @@ export default {
 }
 </script>
 <template>
+    <button @click="console.log(this.weatherData)">22222</button>
     <div>
         <weatherSlot v-for="item in place" :key="item.id" @click="checkPlace = item.id"
             :class="{ 'bg-orange-600 text-white': checkPlace == item.id }">
