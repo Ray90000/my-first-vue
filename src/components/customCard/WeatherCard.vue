@@ -12,7 +12,7 @@ export default {
         <div class="w-full">
             <img src="" alt="">
         </div>
-        <div class="p-5">
+        <div class="p-5 w-[100%]">
             區域:<span>{{ weatherPlace.locationName }}</span>
             氣溫:<span>{{ weatherPlace.weatherElement[2].time[0].parameter.parameterName }}C</span>
             體感: <span>{{ weatherPlace.weatherElement[3].time[0].parameter.parameterName }}</span>
