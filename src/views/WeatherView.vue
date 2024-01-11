@@ -10,6 +10,8 @@ export default {
     data() {
         return {
             weatherData: [],
+            watchCheck: '',
+            watchText: '',
             //地區
             place: [
                 {
@@ -39,10 +41,13 @@ export default {
             ],
             checkPlace: 'all',
             north: ['臺北市', '新北市', '基隆市', '桃園市', '新竹縣', '新竹市', '宜蘭縣'],
-            mid: ['苗栗縣', '台中市', '彰化縣', '南投縣', '雲林縣'],
+            mid: ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣'],
             south: ['嘉義市', '嘉義縣', '臺南市', '高雄市', '屏東縣', '澎湖縣'],
             east: ['花蓮縣', '臺東縣'],
-            outside: ['金門縣', '連江縣']
+            outside: ['金門縣', '連江縣'],
+
+    // 新增 data 屬性
+    checkDataArray: [],
             // background,
         }
     },
@@ -66,13 +71,13 @@ export default {
                     return true;
                 } else if (this.checkPlace === 1) {
                     return this.north.includes(item.locationName);
-                }else if (this.checkPlace === 2){
+                } else if (this.checkPlace === 2) {
                     return this.mid.includes(item.locationName);
-                }else if (this.checkPlace === 3){
+                } else if (this.checkPlace === 3) {
                     return this.south.includes(item.locationName);
-                }else if (this.checkPlace === 4){
+                } else if (this.checkPlace === 4) {
                     return this.south.includes(item.locationName);
-                }else if (this.checkPlace === 5){
+                } else if (this.checkPlace === 5) {
                     return this.outside.includes(item.locationName);
                 }
             })
@@ -80,10 +85,24 @@ export default {
     },
     methods: {
     },
+    watch: {
+        watchText: {
+            handler() {
+                if (this.watchText.toString().trim() === '') return;
+                const filteredData = this.checkData.filter(item => this.watchText.includes(item.locationName));
+                console.log(filteredData);
+                this.checkData = filteredData.slice();
+            }
+        }
+    },
 }
 </script>
 <template>
-    <button @click="console.log(this.weatherData)">22222</button>
+    <div>
+        {{ watchText }}
+        <input v-model="watchCheck" type="checkbox" class="bg-black">
+        <input v-model="watchText" type="text " class="bg-black text-white">
+    </div>
     <div>
         <weatherSlot v-for="item in place" :key="item.id" @click="checkPlace = item.id"
             :class="{ 'bg-orange-600 text-white': checkPlace == item.id }">
@@ -95,10 +114,6 @@ export default {
     </div>
 </template>
 <style>
-/* .weather {
-    background-size: cover;
-    background-position: center;
-    width: 50vw;
-} */
+
 </style>
   
