@@ -12,6 +12,8 @@ export default {
             weatherData: [],
             watchCheck: '',
             watchText: '',
+            // 新增 data 屬性
+            checkDataArray: [],
             //地區
             place: [
                 {
@@ -46,9 +48,7 @@ export default {
             east: ['花蓮縣', '臺東縣'],
             outside: ['金門縣', '連江縣'],
 
-    // 新增 data 屬性
-    checkDataArray: [],
-            // background,
+
         }
     },
     mounted() {
@@ -88,7 +88,7 @@ export default {
     watch: {
         watchText: {
             handler() {
-                if (this.watchText.toString().trim() === '') return;
+                if (this.watchText.trim() === '') return;
                 const filteredData = this.checkData.filter(item => this.watchText.includes(item.locationName));
                 console.log(filteredData);
                 this.checkData = filteredData.slice();
@@ -113,7 +113,5 @@ export default {
         <weatherCard v-for="item in checkData" :key="item.id" :weather-place="item"></weatherCard>
     </div>
 </template>
-<style>
-
-</style>
+<style></style>
   
