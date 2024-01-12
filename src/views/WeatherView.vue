@@ -1,12 +1,14 @@
 <script>
 // import background from '@/assets/image/01.jpg';
+import WeatherCard from '@/components/customCard/WeatherCard.vue';
 import weatherCard from '@/components/customCard/WeatherCard.vue';
 import weatherSlot from '@/components/customCard/WeatherSlot.vue';
 export default {
     components: {
-        weatherCard,
-        weatherSlot,
-    },
+    weatherCard,
+    weatherSlot,
+    WeatherCard
+},
     data() {
         return {
             weatherData: [],
@@ -88,10 +90,14 @@ export default {
     watch: {
         watchText: {
             handler() {
-                if (this.watchText.trim() === '') return;
+                if (this.watchText.trim() === '') {
+                    
+                    this.checkDataArray = [];
+                }
                 const filteredData = this.checkData.filter(item => this.watchText.includes(item.locationName));
-                console.log(filteredData);
-                this.checkData = filteredData.slice();
+                // console.log(filteredData);
+                this.checkDataArray = filteredData;
+                console.log(this.checkDataArray);
             }
         }
     },
@@ -109,8 +115,15 @@ export default {
             {{ item.place }}
         </weatherSlot>
     </div>
-    <div class="flex flex-col ">
-        <weatherCard v-for="item in checkData" :key="item.id" :weather-place="item"></weatherCard>
+    <div >
+        <div v-if="checkDataArray.length !== 0">
+            <weatherCard v-for="item in checkDataArray" :key="item.id" :weather-place="item"></weatherCard>
+        </div>
+        <div v-else class="flex flex-wrap gap-5 ">
+            <weatherCard v-for="item in checkData" :key="item.id" :weather-place="item"></weatherCard>
+        </div>
+        
+
     </div>
 </template>
 <style></style>
